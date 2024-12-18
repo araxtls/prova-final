@@ -1,0 +1,143 @@
+# QUESTÃO 4: Considere os dados de eficiências de máquinas descritas no vetor numérico nomeado em Eficiencia e a descrição da máquina ter sido submetida à algum teste de qualidade está no vetor lógico nomeado em TestesQualidade:
+
+eficiencia = c(85.90      13.10      59.51      83.49      36.20     60.90      49.76      29.27      79.65      73.49)
+names(eficiencia) = c('Máquina 1'  'Máquina 2'  'Máquina 3'  'Máquina 4'  'Máquina 5'  'Máquina 6'  'Máquina 7'  'Máquina 8'  'Máquina 9'  'Máquina 10')
+
+testeQualidade = c(TRUE      FALSE      FALSE       TRUE      FALSE     TRUE      FALSE      FALSE       TRUE       TRUE)
+names(testeQualidade) = c('Máquina 1'  'Máquina 2'  'Máquina 3'  'Máquina 4'  'Máquina 5'  'Máquina 6'  'Máquina 7'  'Máquina 8'  'Máquina 9'  'Máquina 10')
+
+# raiz quadrada da media da eficiencia das maquinas
+mediaEficiencia = sum(eficiencia) / length(eficiencia)
+sqrt(mediaEficiencia)
+
+# mediana da eficiencia das maquinas que passaram no teste de qualidade
+aprovadas = subset(testeQualidade, testeQualidade == TRUE)
+median(aprovadas)
+
+# maior eficiencia dentre as maquinas que nao passaram no teste de qualidade
+reprovadas = subset(testeQualidade, testeQualidade == FALSE)
+max(reprovadas)
+
+# maquinas que precisam de manutencao e passaram no teste de quaildade
+aprovadas_manutencao = aprovadas[eficiencia < 60]
+
+# desvio padrao da eficiencia das maquinas que passaram no teste de qualidade
+sd_aprovadas = sd(aprovadas)
+
+# QUESTÃO 1: Considere os bancos de dados BoardGames1 e BoardGames2 para responder as questões que seguem. Os bancos apresentam uma série de informações sobre jogos de tabuleiro.
+bgCat = read.csv('BoardGames_Cat.csv')
+bgNUmeric = read.csv('BoardGames_Numeric.csv')
+jogos = merge(bgCat, bgNumeric)
+
+# jogos cujo nome tem cinco palavras que tem nota media maior que dois
+nome5 = c()
+i = 1
+
+strplit(jogos$name, ',') %>%
+  if (i =< length(jogos$name) & length jogos$name[i] == 5) {
+    append(nome5, jogos$name[i])
+    i = i + 1
+}
+
+nome5_media2 = subset(jogos, jogos$name %in% nome5) %>%
+  subset(jogos, average > 2)
+
+# jogos lançados apos 1990 que tem ponto e virgula na descriçao
+ano1990 = subset(jogos, yearpublished > 1990)
+pontovirgula = subset(ano1990, description(contains(';')))
+
+# quantos dos jogos que admitem no maximo 16 jogadores e e possuem tempo minimo de jogo superior a 10 nao contem a letra U no nome
+maximo_minimo = subset(jogos$maxplayers, maxplayers =< 16) %<%
+  subset(jogos$minplaytime, minplaytime > 10)
+
+letraU = subset(jogos$name, description(contains('U')))
+
+maximo_minimo_letraU = subset(maximo_minimo, !letraU)
+
+# dentre os jogos lançados em 1980, qual possui a maior quantidade de avaliações? considere apenas os jogos cujo tempo máximo de jogo (maxplaytime) é 30 minutos
+ano1980 = subset(jogos, yearpublished == 1980)
+tempo30 = subset(ano1980, maxplaytime == 30)
+maisAV = tempo30[max(jogos$users_rated)]
+
+# dentre os jogos lançados em 2013, qual possui a maior quantidade de caracteres na descrição (description)? considere apenas os jogos cuja idade mínima para jogar (minage) é dada por um número par
+ano2013 = subset(jogos, yearpublished == 2013)
+minimaPAR = subset(ano2013, minage %% 2 == 0)
+caracteres = 
+
+# QUESTAO 2: tuesdata <- tidytuesdayR::tt_load('2024-12-24')
+
+# No ano de 2017 houveram quantos feriados no(a) país Lithuania?
+
+# Em qual mês do ano de 2017 houve mais feriados no(a) país Switzerland?
+
+# Quantos passageiros (Total) foram registrados no aeroporto do(a) país Bulgaria no mês com maior número de feriados do ano de 2016?
+
+# Qual ano teve a maior média de passageiros do tipo Domestic nos aeroportos do(a) país Austria?
+
+# Qual país teve a maior quantidade de feriados públicos no ano de 2015?
+
+# Qual ano teve a maior quantidade de passageiros nos aeroportos do(a) país Slovakia?
+
+# QUESTÃO 3: 
+restaurantes = read.csv('michelin.csv')
+long = restaurantes$longitude(restaurantes$name == 'Alan Geaam')
+lat = restaurantes$latitude(restaurantes$name == 'Alan Geaam')
+
+distancia = 2 * 6.371 * asin(sqrt((sin((φ2 − φ12) / 2) ^ 2) + (cosφ1 * cosφ2 * sin((λ2 − λ12) / 2))))
+haversine_distance
+
+# quantos quilômetros o entusiasta precisa viajar para visitar o próximo restaurante com 1 Star
+1star = subset(restaurantes$award, restaurantes$award == 1 Star)
+
+distanciasLON = c()
+distanciasLAT = c()
+m = 1
+n = 1
+
+for (m =< length(1star$longitude)) {
+  append(distanciasLON, 1star$longitude[m])
+    m = m + 1
+}
+
+for (n =< length(1star$latitude)) {
+  append(distanciasLAT, 1star$latitude[n])
+    n = n + 1
+}
+
+media1 = (lat + lon) / 2
+
+media2 = c()
+o = 1
+
+for (o =< length(distanciasLON) & o =< length(distanciasLAT))) {
+  media = (distanciasLONG[o] + distanciasLAT[o]) / 2
+  subtracao = media1 - media
+
+  if (subtracao > 0) {
+    append(media2, subtracao)
+  }
+
+  o = o + 1
+}
+
+haversine_distance(max(media2))
+
+# existe, no total, quantos restaurantes com 1, 2 ou 3 estrelas Michelin a uma distância de 100 km do restaurante inicial?
+stars = subset(restaurantes$award, restaurantes$award == 1 Star | restaurantes$award == 2 Stars | restaurantes$award == 3 Stars)
+
+media3 = mean(distanciaLON, distanciaLAT)
+
+haversine_distance(media3 < 100)
+
+# O estusiasta decidiu celebrar seu aniversário em um restaurante com pelo menos uma estrela Michelin. Ele pode gastar até 3 dinheiros locais em um próximo restaurante que esteja a uma distância máxima de 2000 km, fora da cidade inicial. Nesse contexto, ele deveria escolher um restaurante dentre quantos?
+minimo = subset(restaurantes$award, restaurantes$award => 1 Star)
+dinheiros = subset(restaurantes$price, restaurantes$price =< 3)
+
+escolha = haversine_distance(media3 < 2000) %<%
+  !contains('Rubano, ITaly')
+
+length(escolha)
+
+# caso o entusiasta queira saborear algo da culinária Modern Cuisine qual a distância mínima (em km) que ele precisará se deslocar?
+escolha2 = minimo = subset(restaurantes, restaurantes$cuisine == 'Modern cuisine')
+min(escolha2[haversine_distance(media3)])
